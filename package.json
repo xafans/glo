@@ -31,8 +31,7 @@
         "hooks",
         "state",
         "global",
-        "useGlo",
-        "useGlobalState"
+        "useGlo"
     ],
     "author": "Xafans",
     "license": "MIT",

@@ -1,9 +1,10 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from "@testing-library/react";
+import React from 'react';
 import { expect, it } from 'vitest';
-import { useGlobalState } from '../src/useGlobalState';
+import { useGlo } from '../src/useGlo';
 
+const _ = React.version; // to avoid react not used error
 
 it("should share state between multiple components", () => {
     render(
@@ -29,7 +30,7 @@ it("should share state between multiple components", () => {
 
 
     function Counter({ label }: { label: string }) {
-        const [count, setCount] = useGlobalState("counter", 0);
+        const [count, setCount] = useGlo("counter", 0);
 
         return (
             <div>
@@ -44,12 +45,12 @@ it("should share state between multiple components", () => {
 
 it("should isolate different keys", () => {
     const TestA = () => {
-        const [val, setVal] = useGlobalState("keyA", 0);
+        const [val, setVal] = useGlo("keyA", 0);
         return <button data-testid="btnA" onClick={() => setVal(v => v + 1)}>{val}</button>;
     };
 
     const TestB = () => {
-        const [val, setVal] = useGlobalState("keyB", 100);
+        const [val, setVal] = useGlo("keyB", 100);
         return <button data-testid="btnB" onClick={() => setVal(v => v + 1)}>{val}</button>;
     };
 
@@ -74,7 +75,7 @@ it("should isolate different keys", () => {
 
 it("should support functional updates", () => {
     const Test = () => {
-        const [val, setVal] = useGlobalState("func", 5);
+        const [val, setVal] = useGlo("func", 5);
         return <button data-testid="btn" onClick={() => setVal(v => v * 2)}>{val}</button>;
     };
 
@@ -89,12 +90,12 @@ it("should support functional updates", () => {
 
 it("should support only signaling the change", () => {
     const TestA = () => {
-        const [_, __, signal] = useGlobalState("key", 0);
+        const [_, __, signal] = useGlo("key", 0);
         return <button data-testid="btn" onClick={() => signal(v => v + 1)}>Signal</button>;
     };
 
     const TestB = () => {
-        const [val] = useGlobalState<number>("key");
+        const [val] = useGlo<number>("key");
         return <div data-testid="div">{val}</div>;
     };
 

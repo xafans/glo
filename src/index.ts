@@ -1,3 +1,3 @@
-export { useGlobalState, useGlobalSignal } from "./useGlobalState";
+export { useGlo, useGloSignal } from "./useGlo";
 
-export type { GlobalStoreEntry, GlobalSubscriber, GlobalStateValue } from "./types";
+export type { GloStoreEntry, GloSubscriber, GloStateValue } from "./types";

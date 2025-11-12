@@ -8,7 +8,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'ReactGlobalStateHook',
-            fileName: 'use-global-state',
+            fileName: 'glo',
             formats: ['es', 'cjs']
         },
         rollupOptions: {

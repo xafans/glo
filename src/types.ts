@@ -1,14 +1,14 @@
-export type GlobalSubscriber<T> = {
+export type GloSubscriber<T> = {
     id: number;
     setter: React.Dispatch<React.SetStateAction<T>>;
 };
 
-export type GlobalStoreEntry<T> = {
+export type GloStoreEntry<T> = {
     value: T;
-    subscribers: GlobalSubscriber<T>[];
+    subscribers: GloSubscriber<T>[];
 };
 
-export type GlobalStateValue<T> = T | ((prev: T) => T);
+export type GloStateValue<T> = T | ((prev: T) => T);
 
-export type GlobalStateReturn<T> = [T, (value: GlobalStateValue<T>, signal?: boolean) => void, (value: GlobalStateValue<T>) => void];
+export type GloStateReturn<T> = [T, (value: GloStateValue<T>, signal?: boolean) => void, (value: GloStateValue<T>) => void];
 

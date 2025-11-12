@@ -1,20 +1,20 @@
 import React from "react";
-import { GlobalStateReturn, GlobalStateValue, GlobalStoreEntry } from "./types";
+import { GloStateReturn, GloStateValue, GloStoreEntry } from "./types";
 
 let idCounter = 0;
-const globalStore = new Map<string, GlobalStoreEntry<any>>();
+const gloStore = new Map<string, GloStoreEntry<any>>();
 
 
-export function useGlobalState<T>(
+export function useGlo<T>(
     key: string,
-    initialValue?: GlobalStateValue<T>
-): GlobalStateReturn<T> {
+    initialValue?: GloStateValue<T>
+): GloStateReturn<T> {
 
-    if (!globalStore.has(key)) {
-        globalStore.set(key, { value: initialValue, subscribers: [] });
+    if (!gloStore.has(key)) {
+        gloStore.set(key, { value: initialValue, subscribers: [] });
     }
 
-    const store = globalStore.get(key)!;
+    const store = gloStore.get(key)!;
     const [state, setState] = React.useState(store.value);
     const idRef = React.useRef(++idCounter);
 
@@ -25,7 +25,7 @@ export function useGlobalState<T>(
         };
     }, [key]);
 
-    const setGlobalState = (value: GlobalStateValue<T>, signal?: boolean) => {
+    const setGloState = (value: GloStateValue<T>, signal?: boolean) => {
         const valueToStore =
             typeof value === "function"
                 ? (value as (prev: T) => T)(store.value)
@@ -39,8 +39,8 @@ export function useGlobalState<T>(
         }
     };
 
-    const signal = <T>(value: GlobalStateValue<T>) => {
-        const store = globalStore.get(key);
+    const signal = <T>(value: GloStateValue<T>) => {
+        const store = gloStore.get(key);
         if (!store) return;
 
         const nextValue =
@@ -55,11 +55,11 @@ export function useGlobalState<T>(
         }
     }
 
-    return [state, setGlobalState, signal];
+    return [state, setGloState, signal];
 }
 
-export function useGlobalSignal<T>(key: string, value: GlobalStateValue<T>) {
-    const [_, __, signal] = useGlobalState<T>(key, value as T);
+export function useGloSignal<T>(key: string, value: GloStateValue<T>) {
+    const [_, __, signal] = useGlo<T>(key, value as T);
 
     return signal;
 }
